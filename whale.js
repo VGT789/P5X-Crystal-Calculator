@@ -1,4 +1,5 @@
 // Field bindings
+const selectServer = document.getElementById('server');
 const selectEndDate = document.getElementById('banner-end-date');
 const inputCurrentCrystals = document.getElementById('in-current-crystals');
 const checkboxMonthlypass = document.getElementById('monthly-pass');
@@ -6,7 +7,7 @@ const checkboxactivities= document.getElementById('activities');
 const selectSOSbracket= document.getElementById('SOS-bracket');
 
 
-
+selectServer.addEventListener('change', determineServer);
 selectEndDate.addEventListener('change', determineDaysUntilEnd);
 inputCurrentCrystals.addEventListener('change', setCurrentCrystals);
 checkboxMonthlypass.addEventListener('change',setMonthlypass);
@@ -22,8 +23,10 @@ const SOSbracketType = {
     one: 4
 };
 const DailyLoginCard = [1,2,4,5,6,7,10];
+const serverType = {"CN":0,"TW":1,"KR":2};
 
 // variables
+var server = serverType.CN;
 var enddate = new Date();
 var totalcrystals = 0;
 var DaysLeft = 0;
@@ -47,6 +50,7 @@ var CharacterTrialReward = 0;
 var VersionLoginReward = 0;
 var MonthlyShopReward = 0;
 var MailReward = 0;
+var VersionCodeReward = 0;
 
 
 
@@ -64,6 +68,7 @@ function updateCalculations(){
     determineVersionLoginReward(DaysLeft);
     determineSOSrewards();
     determineSOSbracketrewards();
+    determineVersionCodeReward();
     determineTotalCrystalRewards();
 }
 
@@ -92,6 +97,26 @@ function determineDaysUntilEnd(e){
     updateCalculations();
 }
 
+function determineServer(e){
+    switch(e.target.value){
+        case 'CN':
+            server = serverType.CN;
+            console.log(server)
+            break;
+        case 'TW':
+            server = serverType.TW;
+            console.log(server)
+            break;
+        case 'KR':
+            server = serverType.KR;
+            console.log(server)
+            break;
+    }
+    determinePatchLeft(DaysLeft);
+    updateCalculations();
+}
+
+
 function determineRaidLeft(d){
     let today = new Date();
     let day = today.getDay();
@@ -103,14 +128,20 @@ function determineRaidLeft(d){
 
 function determinePatchLeft(d){
     let today = new Date();
-    today.setHours(0,0,0,0);
-    let patchday = new Date("Thu Aug 1 2024 00:00:00 GMT+0200");
+    today.setHours(22,30,0,0);
+    let patchday = new Date();
+    if (server == serverType.CN){
+        patchday = new Date("Wed Jul 31 2024 22:30:00 GMT+0200");
+        } 
+    if (server == serverType.TW || server == serverType.KR){ 
+        patchday = new Date("Wed Aug 7 2024 22:30:00 GMT+0200");
+        }
     patch_to_today = today - patchday;
     if (patch_to_today > 0){
         patch_to_today = Math.ceil(patch_to_today / (1000*60*60*24));
-    }
+        }
     patch_to_today = patch_to_today % 14;
-    patchleft = d>=14 ? Math.ceil((d - (14 - patch_to_today))/14) : 0;
+    patchleft = Math.ceil((d - (14 - patch_to_today))/14);
     updateCalculations();
 }
 
@@ -258,6 +289,11 @@ function determineVersionLoginReward(e){
 function determineMonthlyPassReward(e){
     MonthlyPassReward = monthlypass ? 100 * e : 0;
     document.getElementById('pass-rewards').innerText = MonthlyPassReward;
+}
+
+function determineVersionCodeReward(){
+    VersionCodeReward = patchleft * 300;
+    document.getElementById('Version-code-rewards').innerText = VersionCodeReward;
 }
 
 function determineMonthlyShopReward(e){

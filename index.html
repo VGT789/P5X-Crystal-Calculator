@@ -27,7 +27,7 @@
     </div>
     <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-        <a href="https://vgt789.github.io/P5X-Crystal-calculator/" class="w3-bar-item w3-button w3-padding w3-blue"><img src="Images/favicon.ico">  P5X Crystal Calculator</a>
+        <a href="https://vgt789.github.io/P5X-Crystal-Calculator/" class="w3-bar-item w3-button w3-padding w3-blue"><img src="Images/favicon.ico">  P5X Crystal Calculator</a>
         <a href="https://vgt789.github.io/Honkai-Crystal-calculator/" class="w3-bar-item w3-button w3-padding w3-grey"><img src="Images/Crystal icon.ico">  HI3rd Crystal Calculator</a>
     </div>
     </nav>
@@ -52,6 +52,16 @@
 
     <div class="w3-container">
         <table class="w3-table w3-striped w3-white">
+            <tr> <!--Server Name-->
+                <td>Server</td>
+                <td>
+                    <select id="server">
+                        <option value="CN">CN</option>
+                        <option value="TW">TW</option>
+                        <option value="KR">KR</option>
+                    </select>
+                </td>
+                <td></td>
             <tr> <!--Banner End Date-->
                 <td>When Does the Banner End?</td>
                 <td><input type="date" id="banner-end-date"></td>
@@ -75,7 +85,7 @@
                 <td id="commission-rewards">0</td>
             </tr>
             <tr> <!--Daily activities-->
-                <td>Daily Activies Rewards <a title="Rough estimate so check only if you desesperatly need to cope." style="color: red; font-weight:bold;">⚠</a></td>
+                <td>Daily Activities Rewards <a title="Rough estimate so check only if you desesperatly need to cope." style="color: red; font-weight:bold;">⚠</a></td>
                 <td>
                     <input type="checkbox" id="activities" uncheked>
                     <label for="activities"> 10/day</label>
@@ -115,6 +125,13 @@
                     <label for="Trial"> 60/patch</label>
                 </td>
                 <td id="Trial-rewards">0</td>
+            </tr>
+            <tr><!--Version code-->
+                <td>New Version Code</td>
+                <td>
+                    <label for="Version-code"> 300/patch</label>
+                </td>
+                <td id="Version-code-rewards">0</td>
             </tr>
             <tr><!--Version Login-->
                 <td>Version Login Reward</td>
